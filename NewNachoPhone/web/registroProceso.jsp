@@ -43,13 +43,14 @@
             rolInt = Integer.parseInt(request.getParameter("rol"));
             dni = request.getParameter("dni");
 
-            out.println(pwd);
+            
            
 
 
 
-int i=s.executeUpdate("insert into USUARIO(DNIUsu,PwdUsu,NomUsu,ApeUsu,EmaUsu,ConUsu,IdRol)values('"+dni+"','"+pwd+"','"+nombre+"','"+apellido+"','"+email+"','"+tfno+"','"+rolInt+"')");
-out.println("Te has registrado correctamente");
+            int i=s.executeUpdate("insert into USUARIO(DNIUsu,PwdUsu,NomUsu,ApeUsu,EmaUsu,ConUsu,IdRol)values('"+dni+"','"+pwd+"','"+nombre+"','"+apellido+"','"+email+"','"+tfno+"','"+rolInt+"')");
+
+            out.println("Te has registrado correctamente");
 
 
 

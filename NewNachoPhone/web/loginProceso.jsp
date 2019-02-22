@@ -42,6 +42,7 @@
             }
             
             if (comprob) {
+             session.setAttribute("email", email);
                 %><script>
                     location.replace("principal.jsp");
                 </script><%

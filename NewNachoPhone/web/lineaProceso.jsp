@@ -42,5 +42,9 @@
 
         %>
         
+        <script>
+            location.replace("principal.jsp");
+        </script>
+        
     </body>
 </html>
