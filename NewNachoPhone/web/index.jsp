@@ -33,7 +33,7 @@
         
         <div class="card" style="width: 25rem; margin: 0 auto; margin-top: 10%;">
             <div class="card-body">
-                <form method="post" action="principal.jsp">
+                <form method="post" action="loginProceso.jsp">
                     <fieldset>
 
                     <!-- Form Name -->
