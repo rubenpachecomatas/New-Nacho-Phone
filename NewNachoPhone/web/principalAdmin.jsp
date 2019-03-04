@@ -1,7 +1,7 @@
 <%-- 
-    Document   : principal
-    Created on : 22 feb. 2019, 11:38:48
-    Author     : roman
+    Document   : principalAdmin
+    Created on : 4 mar. 2019, 13:20:14
+    Author     : ruben
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -23,6 +23,7 @@
 
     </head>
     <body>
+        
         <%
           request.setCharacterEncoding("UTF-8");
             Class.forName("com.mysql.jdbc.Driver");
@@ -31,67 +32,77 @@
             
             Connection conexion2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/New_Nacho_Phone", "root", "");
             Statement t = conexion2.createStatement();
-            
-            
+
             String email = (String)session.getAttribute("email"); 
             String dni = "";
             String nombre = "";
+            int rolV = 0;
             
-            ResultSet listado = s.executeQuery("Select EmaUsu, DNIusu, NomUsu FROM USUARIO WHERE DNIusu");
+            ResultSet listado = s.executeQuery("Select EmaUsu, DNIusu, NomUsu, IdRol FROM USUARIO WHERE DNIusu");
                 while (listado.next()){
                     if(email.equals(listado.getString("EmaUsu"))){
-                        dni = listado.getString("DNIusu");
+                        dni = listado.getString("DNIUsu");
                         nombre = listado.getString("NomUsu");
+                        rolV = listado.getInt("IdRol");
+                        
                     }
                 }
                 
             session.setAttribute("user", dni);
             session.setAttribute("nombre", nombre);
-                 
+
         %>
+        
         <div class="text-center">
             <h1 class="display-3">Hola <% out.println(nombre);%></h1>
-            <h3>Estas son tus líneas contratadas:</h3>
+            <h3>Bienvenido al panel de control de NachoPhone</h3>
+            <h3>Desde aquí puedes visualizar y modificar los datos de nuestros clientes</h3>
             <br>
         </div>
+            
         <%
-            listado = s.executeQuery("Select idGas, MinGas, MegGas, IdTar, DNIUsu, TfnGas FROM GASTOS");
+            listado = s.executeQuery("SELECT * FROM USUARIO WHERE IdRol!=" + 2);
             while (listado.next()) {
-                if(dni.equals(listado.getString("DNIUsu"))){
-                    ResultSet tarifa = t.executeQuery("Select NomTar, MinTar, MegTar, idTar FROM TARIFA WHERE idTar = " + listado.getString("idTar"));
-                    while (tarifa.next()) {
-                    %><table class="table table-dark table-bordered">
-                        <tr>
-                            <td>Número</td>
-                            <td><%=listado.getString("TfnGas")%></td>
-                        </tr>
-                        <tr>
-                            <td>Minutos Gastados</td>
-                            <td><%=listado.getString("MinGas")%> / <%=tarifa.getString("MinTar")%></td>
-                        </tr>
-                        <tr>
-                            <td>Megas Gastados</td>
-                            <td><%=listado.getString("MegGas")%> / <%=tarifa.getString("MegTar")%></td>
-                        </tr>
-                        <tr>
-                            <td>Tarifa</td>
-                            <td><%=tarifa.getString("NomTar")%></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" class="text-center">
-                                <button class="btn btn-secondary" onclick="location.href='tarifa.jsp'">Cambiar de tarifa</button>
-                            </td>
-                        </tr>
-                    </table><br><%
-                    }
+                ResultSet rol = t.executeQuery("Select IdRol, NomRol FROM ROLES WHERE IdRol = " + listado.getInt("IdRol"));
+                while (rol.next()) {
+                %>
+               
+                    <div class="text-center">
+                        <table class="table table-dark table-bordered">
+                            <tr>
+                                <td>Nombre</td>
+                                <td><%= listado.getString("NomUsu") %></td>
+                            </tr>
+                            <tr>
+                                <td>Apellido</td>
+                                <td><%= listado.getString("ApeUsu") %></td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td><%= listado.getString("EmaUsu") %></td>
+                            </tr>
+                            <tr>
+                                <td>DNI</td>
+                                <td><%= listado.getString("DNIUsu") %></td>
+                            </tr>
+                            <tr>
+                                <td>Rol</td>
+                                <td><%= rol.getString("NomRol") %></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="text-center">
+                                    <button class="btn btn-secondary" onclick="location.href='rol.jsp'">Cambiar Rol</button>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+                <%
                 }
             }
+        
         %>
-        <div class="text-center">
-            <button class="btn btn-primary" onclick="window.location.href='linea.jsp'"> Añadir una linea nueva</button>
-        </div>
-        
-        
             
     </body>
 </html>

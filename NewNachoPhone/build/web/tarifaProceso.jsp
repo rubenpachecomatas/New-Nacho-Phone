@@ -1,8 +1,9 @@
 <%-- 
-    Document   : loginProceso
-    Created on : 22 feb. 2019, 10:46:06
+    Document   : tarifaProceso
+    Created on : 4 mar. 2019, 11:41:35
     Author     : ruben
 --%>
+
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
@@ -21,6 +22,7 @@
         
     </head>
     <body>
+        
         <%
             request.setCharacterEncoding("UTF-8");
 
@@ -28,40 +30,34 @@
             Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/New_Nacho_Phone", "root", "");
             Statement s = conexion.createStatement();
             
-            String email = request.getParameter("mail");
-            String pwd = request.getParameter("pwd");
-            boolean comprob = false;
-            int rol = 0;
+            Connection conexion2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/New_Nacho_Phone", "root", "");
+            Statement t = conexion2.createStatement();
             
-            ResultSet listado = s.executeQuery("SELECT EmaUsu, PwdUsu, IdRol FROM USUARIO");
-            while (listado.next()) {
-                if (email.equals(listado.getString("EmaUsu"))) {
-                    if (pwd.equals(listado.getString("PwdUsu"))) {
-                        comprob = true;
-                        rol = listado.getInt("IdRol");
-                    }
+            int num = Integer.parseInt(request.getParameter("num"));
+            String opcion = request.getParameter("opcion");
+            boolean comprob = false;
+            
+            ResultSet tarifa = t.executeQuery("Select TfnGas FROM GASTOS");
+            while (tarifa.next()) {
+                if (num == tarifa.getInt("TfnGas")) {
+                    comprob = true;
                 }
             }
             
             if (comprob) {
-                session.setAttribute("email", email);
-                switch (rol) {
-                    case 1:
-                        %><script>
-                            location.replace("principal.jsp");
-                        </script><%
-                        break;
-                    case 2:
-                        %><script>
-                            location.replace("principalAdmin.jsp");
-                        </script><%
-                        break;
-                }
+                String actualizacion = "UPDATE GASTOS SET IdTar=" + opcion + " WHERE TfnGas =" + num;
+                s.execute(actualizacion);
+                %><script>
+                    location.replace("principal.jsp");
+                </script><%
             } else {
                 %><script>
-                    location.replace("index.jsp");
+                    location.replace("tarifa.jsp");
                 </script><%
             }
+            
         %>
+        
+        
     </body>
 </html>

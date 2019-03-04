@@ -1,6 +1,6 @@
 <%-- 
-    Document   : loginProceso
-    Created on : 22 feb. 2019, 10:46:06
+    Document   : cambioTarifa
+    Created on : 4 mar. 2019, 10:56:11
     Author     : ruben
 --%>
 <%@page import="java.sql.ResultSet"%>
@@ -21,47 +21,55 @@
         
     </head>
     <body>
+        
         <%
             request.setCharacterEncoding("UTF-8");
 
             Class.forName("com.mysql.jdbc.Driver");
             Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/New_Nacho_Phone", "root", "");
             Statement s = conexion.createStatement();
-            
-            String email = request.getParameter("mail");
-            String pwd = request.getParameter("pwd");
-            boolean comprob = false;
-            int rol = 0;
-            
-            ResultSet listado = s.executeQuery("SELECT EmaUsu, PwdUsu, IdRol FROM USUARIO");
-            while (listado.next()) {
-                if (email.equals(listado.getString("EmaUsu"))) {
-                    if (pwd.equals(listado.getString("PwdUsu"))) {
-                        comprob = true;
-                        rol = listado.getInt("IdRol");
-                    }
-                }
-            }
-            
-            if (comprob) {
-                session.setAttribute("email", email);
-                switch (rol) {
-                    case 1:
-                        %><script>
-                            location.replace("principal.jsp");
-                        </script><%
-                        break;
-                    case 2:
-                        %><script>
-                            location.replace("principalAdmin.jsp");
-                        </script><%
-                        break;
-                }
-            } else {
-                %><script>
-                    location.replace("index.jsp");
-                </script><%
-            }
+
         %>
+        
+        <form class="form-horizontal" method="post" action="tarifaProceso.jsp">
+        <fieldset>
+
+        <!-- Form Name -->
+        <legend>Seleccione su nueva tarifa</legend>
+
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="num">Número</label>  
+          <div class="col-md-4">
+          <input id="num" name="num" type="text" placeholder="Número de la línea" class="form-control input-md" required="">
+
+          </div>
+        </div>
+
+        <!-- Select Basic -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="tarifa">Tarifa</label>
+          <div class="col-md-10">
+            <select id="opcion" name="opcion" class="form-control">
+              <option value="1">tarifa1</option>
+              <option value="2">tarifa2</option>
+              <option value="3">tarifa3</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Button -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="cambiar"></label>
+          <div class="col-md-4">
+            <button id="cambiar" name="cambiar" class="btn btn-primary">Cambiar</button>
+          </div>
+        </div>
+
+        </fieldset>
+        </form>
+
+
+        
     </body>
 </html>
