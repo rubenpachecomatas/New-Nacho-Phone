@@ -50,33 +50,39 @@
             }
 
             if (comprob && rolCom == 1) {
-            %><button class="btn btn-secondary" onclick="location.href='principalAdmin.jsp'">Volver al panel</button><%
-            ResultSet listado = s.executeQuery("Select idGas, MinGas, MegGas, IdTar, DNIUsu, TfnGas FROM GASTOS");
-            while (listado.next()) {
-                if(dni.equals(listado.getString("DNIUsu"))){
-                    ResultSet tarifa = r.executeQuery("Select NomTar, MinTar, MegTar, idTar FROM TARIFA WHERE idTar = " + listado.getString("idTar"));
-                    while (tarifa.next()) {
-                    %><table class="table table-dark table-bordered">
-                        <tr>
-                            <td>Número</td>
-                            <td><%=listado.getString("TfnGas")%></td>
-                        </tr>
-                        <tr>
-                            <td>Minutos Gastados</td>
-                            <td><%=listado.getString("MinGas")%> / <%=tarifa.getString("MinTar")%></td>
-                        </tr>
-                        <tr>
-                            <td>Megas Gastados</td>
-                            <td><%=listado.getString("MegGas")%> / <%=tarifa.getString("MegTar")%></td>
-                        </tr>
-                        <tr>
-                            <td>Tarifa</td>
-                            <td><%=tarifa.getString("NomTar")%></td>
-                        </tr>
-                    </table><br><%
+            
+                if ((int)session.getAttribute("role") == 2) {
+                    %><button class="btn btn-secondary" onclick="location.href='principalAdmin.jsp'">Volver al panel</button><%
+                } else if ((int)session.getAttribute("role") == 3) {
+                    %><button class="btn btn-secondary" onclick="location.href='principalComercial.jsp'">Volver al panel</button><%
+                }
+
+                ResultSet listado = s.executeQuery("Select idGas, MinGas, MegGas, IdTar, DNIUsu, TfnGas FROM GASTOS");
+                while (listado.next()) {
+                    if(dni.equals(listado.getString("DNIUsu"))){
+                        ResultSet tarifa = r.executeQuery("Select NomTar, MinTar, MegTar, idTar FROM TARIFA WHERE idTar = " + listado.getString("idTar"));
+                        while (tarifa.next()) {
+                        %><table class="table table-dark table-bordered">
+                            <tr>
+                                <td>Número</td>
+                                <td><%=listado.getString("TfnGas")%></td>
+                            </tr>
+                            <tr>
+                                <td>Minutos Gastados</td>
+                                <td><%=listado.getString("MinGas")%> / <%=tarifa.getString("MinTar")%></td>
+                            </tr>
+                            <tr>
+                                <td>Megas Gastados</td>
+                                <td><%=listado.getString("MegGas")%> / <%=tarifa.getString("MegTar")%></td>
+                            </tr>
+                            <tr>
+                                <td>Tarifa</td>
+                                <td><%=tarifa.getString("NomTar")%></td>
+                            </tr>
+                        </table><br><%
+                        }
                     }
                 }
-            }
 
             
             } else {

@@ -45,6 +45,7 @@
             
             if (comprob) {
                 session.setAttribute("email", email);
+                session.setAttribute("role", rol);
                 switch (rol) {
                     case 1:
                         %><script>

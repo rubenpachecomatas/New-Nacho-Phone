@@ -60,47 +60,6 @@
             <br>
             <div style="padding-bottom: 2%;">
                 <button class="btn btn-secondary" onclick="location.href='rol.jsp'">Cambiar Rol</button>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                  Ver lineas
-                </button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Ver Líneas</h5>
-                        </div>
-                        <div class="modal-body" style="text-align: center; margin: 0 auto; padding: 0 auto;">
-                            <form class="form-horizontal text-center" method="post" action="lineas.jsp" style="text-align: center; margin: 0 auto; padding: 0 auto;">
-                            <fieldset>
-
-                            <!-- Text input-->
-                            <div class="form-group text-center" style="text-align: center; margin: 0 auto; padding: 0 auto; padding-bottom: 3%;">
-                              <label class="control-label" for="textinput">DNI</label>  
-                              <div>
-                              <input id="dni" name="dni" type="text" placeholder="DNI del usuario" class="form-control input-md" required="">
-
-                              </div>
-                            </div>
-
-                            <!-- Button -->
-                            <div class="form-group">
-                              <div>
-                                <button id="singlebutton" name="singlebutton" class="btn btn-primary">Ver líneas</button>
-                              </div>
-                            </div>
-
-                            </fieldset>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                  </div>
-                </div>
             </div>
         </div>
             
@@ -133,7 +92,32 @@
                                 <td>Rol</td>
                                 <td><%= rol.getString("NomRol") %></td>
                             </tr>
+                            <%
+                                if (rol.getInt("IdRol") == 1) {
+                                
+                                    %><tr>
+                                        <td colspan="2">
+                                            <form class="form-horizontal" method="post" action="lineas.jsp">
+                                            <fieldset>
+                                                <div class="form-group">
+                                                    <input type="hidden" id="dni" name="dni" value="<%= listado.getString("DNIUsu") %>">
+                                                </div>
+                                                <!-- Button -->
+                                                <div class="form-group">
+                                                  <label class="col-md-4 control-label" for="cambiar"></label>
+                                                  <div class="col-md-4">
+                                                    <button id="cambiar" name="cambiar" class="btn btn-primary">Ver líneas</button>
+                                                  </div>
+                                                </div>
 
+                                            </fieldset>
+                                            </form>
+                                        </td>
+                                    </tr><%
+                                    
+                                }
+                            
+                            %>
                         </table>
                     </div>
                 </div>
