@@ -56,6 +56,11 @@
                             location.replace("principalAdmin.jsp");
                         </script><%
                         break;
+                    case 3:
+                        %><script>
+                            location.replace("principalComercial.jsp");
+                        </script><%
+                        break;
                 }
             } else {
                 %><script>
