@@ -53,7 +53,9 @@
             out.println("Te has registrado correctamente");
 
 
-
+            %><script>
+                location.replace("index.jsp");
+            </script><%
 
 
         

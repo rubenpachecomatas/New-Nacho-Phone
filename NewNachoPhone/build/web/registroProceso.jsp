@@ -3,6 +3,7 @@
     Created on : 22 feb. 2019, 9:38:43
     Author     : roman
 --%>
+<%@ page import="java.security.*, mdhash.*" %>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
@@ -44,14 +45,17 @@
             dni = request.getParameter("dni");
 
             
+
+
            
 
-
-
             int i=s.executeUpdate("insert into USUARIO(DNIUsu,PwdUsu,NomUsu,ApeUsu,EmaUsu,ConUsu,IdRol)values('"+dni+"','"+pwd+"','"+nombre+"','"+apellido+"','"+email+"','"+tfno+"','"+rolInt+"')");
-
             out.println("Te has registrado correctamente");
 
+
+            %><script>
+                location.replace("index.jsp");
+            </script><%
 
 
         

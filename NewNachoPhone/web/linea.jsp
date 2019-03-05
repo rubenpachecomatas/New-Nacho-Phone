@@ -69,9 +69,12 @@
                       <label class="col-md-4 control-label" for="tarifa">Tarifa</label>
                       <div class="col-md-10">
                         <select id="tarifa" name="tarifa" class="form-control">
-                          <option value="1">tarifa1</option>
-                          <option value="2">tarifa2</option>
-                          <option value="3">tarifa3</option>
+                            <%
+                                ResultSet listado = s.executeQuery("Select idTar, NomTar FROM TARIFA");
+                                while (listado.next()) {
+                                %><option value="<%=listado.getInt("idTar")%>"><%=listado.getString("NomTar")%></option><%
+                                }
+                            %>
                         </select>
                       </div>
                     </div>

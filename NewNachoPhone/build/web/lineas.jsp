@@ -38,16 +38,18 @@
             
             String dni = request.getParameter("dni");
             String opcion = request.getParameter("rol");
+            int rolCom = 0;
             boolean comprob = false;
             
-            ResultSet lineas = t.executeQuery("Select DNIUsu FROM USUARIO");
+            ResultSet lineas = t.executeQuery("Select DNIUsu, IdRol FROM USUARIO");
             while (lineas.next()) {
                 if (dni.equals(lineas.getString("DNIUsu"))) {
                     comprob = true;
+                    rolCom = lineas.getInt("IdRol");
                 }
             }
 
-            if (comprob) {
+            if (comprob && rolCom == 1) {
             %><button class="btn btn-secondary" onclick="location.href='principalAdmin.jsp'">Volver al panel</button><%
             ResultSet listado = s.executeQuery("Select idGas, MinGas, MegGas, IdTar, DNIUsu, TfnGas FROM GASTOS");
             while (listado.next()) {
